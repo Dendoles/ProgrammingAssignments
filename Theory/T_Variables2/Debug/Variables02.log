@@ -1,0 +1,3 @@
+﻿  Variables02.cpp
+C:\Users\Dendo\Documents\cat\Variables02\Variables02.cpp(70,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Variables02.vcxproj -> C:\Users\Dendo\Documents\cat\Variables02\Debug\Variables02.exe
