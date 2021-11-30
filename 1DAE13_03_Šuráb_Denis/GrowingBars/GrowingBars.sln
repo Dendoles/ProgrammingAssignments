@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GrowingBars", "GrowingBars.vcxproj", "{EC97880D-324C-4B42-A327-3B101492926D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC97880D-324C-4B42-A327-3B101492926D}.Debug|x64.ActiveCfg = Debug|x64
+		{EC97880D-324C-4B42-A327-3B101492926D}.Debug|x64.Build.0 = Debug|x64
+		{EC97880D-324C-4B42-A327-3B101492926D}.Debug|x86.ActiveCfg = Debug|Win32
+		{EC97880D-324C-4B42-A327-3B101492926D}.Debug|x86.Build.0 = Debug|Win32
+		{EC97880D-324C-4B42-A327-3B101492926D}.Release|x64.ActiveCfg = Release|x64
+		{EC97880D-324C-4B42-A327-3B101492926D}.Release|x64.Build.0 = Release|x64
+		{EC97880D-324C-4B42-A327-3B101492926D}.Release|x86.ActiveCfg = Release|Win32
+		{EC97880D-324C-4B42-A327-3B101492926D}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D89D340-4060-42BC-BAC0-219BA38A968E}
+	EndGlobalSection
+EndGlobal
