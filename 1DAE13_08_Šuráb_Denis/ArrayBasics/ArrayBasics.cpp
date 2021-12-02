@@ -3,6 +3,8 @@
 #include "pch.h"
 #include <iostream>
 #include "structs.h"
+#include <string>
+#include <string.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////// Predeclaration
@@ -13,7 +15,6 @@ void PrintSizeOfArrays();
 void PrintAddressOfArray();
 void TestPrintElements();
 void Print2DArray();
-void AssignValues();
 
 
 
@@ -37,7 +38,7 @@ int main()
     //PrintSizeOfArrays();
     //PrintAddressOfArray();
     //TestPrintElements();
-    AssignValues();
+    //Print2DArray();
 }
 
 void PrintElementsInArrays()
@@ -131,35 +132,32 @@ int GetIndex(int rowIdx, int colIdx, int nrCols)
     return rowIdx * nrCols + colIdx;
 }
 
-void AssignValues()
+void Print2DArray()
 {
     const int arraySize{ 20 };
     const int rows{ 4 };
     const int columns{ 5 };
-    int fake2DArray[arraySize]{};
-    //    11, 12, 13, 14, 15,
-    //    16, 17, 18, 19, 20,
-    //    21, 22, 23, 24, 25,
-    //    26, 27, 28, 29, 30
+    int Array[arraySize]{};
 
-    fake2DArray[0] = 11;
-    fake2DArray[1] = 12;
-
-    for (int i = 0; i < arraySize; i++)
+    for (int i{}; i < rows; i++)
     {
-        for (int u = 0; u < columns; u++)
+        for (int u{}; u < columns; u++)
         {
-            fake2DArray[i] = GetIndex(i, u, columns);
+            //std::cout << "columns: " << u << '\t' << "rows:" << i << '\n';
+            int value{ (i + 1) * 10 + u + 1 };
+            Array[GetIndex(i, u, columns)] = value;
         }
     }
+
+    std::cout << "- - 2D arrays - -" << '\n';
+
     for (int j = 0; j < arraySize; j++)
     {
-        std::cout << fake2DArray[j] << '\n';
+        std::cout << Array[j] << "  ";
+        if ((j + 1) % columns == 0)
+        {
+            std::cout << '\n';
+        }
     }
-}
-
-void Print2DArray()
-{
-    std::cout << "- - 2D arrays - -" << '\n';
     
 }
