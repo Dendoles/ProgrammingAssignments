@@ -78,4 +78,29 @@ namespace utils
 	bool isOverlapping(const Rectf& rectangle1, const Rectf& rectangle2);
 #pragma endregion CollisionFunctionality
 
+
+	// Array functions
+	int ArrayCount(int* pArray, const int arraySize, int desiredNumber);
+	int ArrayMinElement(int* pArray, const int arraySize);
+	int ArrayMaxElement(int* pArray, const int arraySize);
+	void ArraySwap(int index1, int index2, int* pArray);
+	void ArrayShuffle(int* pArray, const int arraySize, int numberOfSwaps);
+	void ArrayBubbleSort(int* pArray, int arraySize, bool isAscending = true);
+	void ArrayPrintElements(int* pArray, const int arraySize);
+	int ArrayGetIndex(int rowIdx, int colIdx, int nrCols);
+	//
+
+	//Vector Functions
+	void DrawVector(const Vector2f& vector, const Point2f& startingPos = Point2f(0, 0));
+	std::string ToString(const Vector2f& vector);
+	Vector2f Add(const Vector2f& vector1, const Vector2f& vector2);
+	Vector2f Subtract(const Vector2f& vector1, const Vector2f& vector2);
+	float DotProduct(const Vector2f& vector1, const Vector2f& vector2);
+	float CrossProduct(const Vector2f& vector1, const Vector2f& vector2);
+	float Length(const Vector2f& vector);
+	Vector2f Scale(const Vector2f& vector, float scale);
+	Vector2f Normalize(const Vector2f& vector);
+	float AngleBetween(const Vector2f& vector1, const Vector2f& vector2);
+	bool AreEqual(const Vector2f& vector1, const Vector2f& vector2);
+	//
 }

@@ -549,4 +549,181 @@ namespace utils
 	}
 
 #pragma endregion CollisionFunctionality
+
+//ArrayFunctionality
+
+	int ArrayCount(int* pArray, const int arraySize, int desiredNumber)
+	{
+		int count{};
+		for (int i = 0; i < arraySize; i++)
+		{
+			if (pArray[i] == desiredNumber)
+			{
+				count++;
+			}
+		}
+		return count;
+	}
+	void ArrayPrintElements(int* pArray, const int arraySize)
+	{
+		for (int i = 0; i < arraySize; i++)
+		{
+			std::cout << pArray[i] << ' ';
+		}
+		std::cout << '\n';
+	}
+	int ArrayMinElement(int* pArray, const int arraySize)
+	{
+		int lowest{ pArray[0] };
+		for (int i = 0; i < arraySize; i++)
+		{
+			if (pArray[i] <= lowest)
+			{
+				lowest = pArray[i];
+			}
+		}
+		return lowest;
+	}
+	int ArrayMaxElement(int* pArray, const int arraySize)
+	{
+		int highest{ pArray[0] };
+		for (int i = 0; i < arraySize; i++)
+		{
+			if (pArray[i] >= highest)
+			{
+				highest = pArray[i];
+			}
+		}
+		return highest;
+	}
+	void ArraySwap(int index1, int index2, int* pArray)
+	{
+		// swapping 2 variables withou using 3rd variable B-)
+		pArray[index1] = pArray[index1] + pArray[index2];
+		pArray[index2] = pArray[index1] - pArray[index2];
+		pArray[index1] = pArray[index1] - pArray[index2];
+	}
+	void ArrayShuffle(int* pArray, const int arraySize, int numberOfSwaps)
+	{
+		int index1{}, index2{};
+		for (int i{}; i < numberOfSwaps; i++)
+		{
+			index1 = rand() % (arraySize - 1) + 0;
+			do
+			{
+				index2 = rand() % (arraySize - 1) + 0;
+			} while (index2 == index1);
+
+			Swap(index1, index2, pArray);
+		}
+	}
+	void ArrayBubbleSort(int* pArray, int arraySize, bool isAscending)
+	{
+		if (arraySize == 1)
+		{
+			return;
+		}
+		for (int i = 0; i < arraySize; i++)
+		{
+			if (isAscending)
+			{
+				if (pArray[i] > pArray[i + 1])
+				{
+					if (i + 1 >= arraySize)
+					{
+
+					}
+					else
+					{
+						Swap(i, i + 1, pArray);
+					}
+				}
+			}
+			else
+			{
+				if (pArray[i] < pArray[i + 1])
+				{
+					Swap(i, i + 1, pArray);
+				}
+			}
+
+		}
+		ArrayBubbleSort(pArray, arraySize - 1, isAscending);
+	}
+	int ArrayGetIndex(int rowIdx, int colIdx, int nrCols)
+	{
+		return rowIdx * nrCols + colIdx;
+	}
+
+}
+// Vector functionality
+void DrawVector(const Vector2f& vector, const Point2f& startingPos)
+{
+	float size{ 5 };
+
+	Point2f endOfTheVectorPos{ vector.x + startingPos.x, vector.y + startingPos.y };
+
+	DrawLine(startingPos.x, startingPos.y, endOfTheVectorPos.x, endOfTheVectorPos.y);
+
+	FillEllipse(endOfTheVectorPos, size, size);
+}
+
+std::string ToString(const Vector2f& vector)
+{
+	std::string vectorS = "[" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + "]";
+	return vectorS;
+}
+
+Vector2f Add(const Vector2f& vector1, const Vector2f& vector2)
+{
+	Vector2f vector{ vector1.x + vector2.x, vector1.y + vector2.y };
+	return vector;
+}
+
+Vector2f Subtract(const Vector2f& vector1, const Vector2f& vector2)
+{
+	Vector2f vector{ vector1.x - vector2.x, vector1.y - vector2.y };
+	return vector;
+}
+
+float DotProduct(const Vector2f& vector1, const Vector2f& vector2)
+{
+	return vector1.x * vector2.x + vector1.y * vector2.y;
+}
+
+float CrossProduct(const Vector2f& vector1, const Vector2f& vector2)
+{
+	return (vector1.x * vector2.y) - (vector1.y * vector2.x);
+}
+float Length(const Vector2f& vector)
+{
+	return sqrtf(powf(vector.x, 2) + powf(vector.y, 2));
+}
+
+Vector2f Scale(const Vector2f& vector, float scale)
+{
+	return Vector2f(vector.x * scale, vector.y * scale);
+}
+Vector2f Normalize(const Vector2f& vector)
+{
+	float length{ Length(vector) };
+	return Vector2f(vector.x / length, vector.y / length);
+}
+float AngleBetween(const Vector2f& vector1, const Vector2f& vector2)
+{
+	return atan2(CrossProduct(vector1, vector2), DotProduct(vector1, vector2));
+}
+
+bool AreEqual(const Vector2f& vector1, const Vector2f& vector2)
+{
+	float difference{ 0.001f };
+	Vector2f vector{ abs(vector1.x - vector2.x), abs(vector1.y - vector2.y) };
+
+
+	if (vector.x <= difference &&
+		vector.y <= difference)
+	{
+		return true;
+	}
+	return false;
 }

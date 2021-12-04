@@ -95,3 +95,15 @@ Ellipsef::Ellipsef( float centerX, float centerY, float radiusX, float radiusY )
 	: Ellipsef{ Point2f{ centerX, centerY }, radiusX, radiusY }
 {
 }
+
+//-----------------------------------------------------------------
+// Vector2f Constructor
+//-----------------------------------------------------------------
+Vector2f::Vector2f()
+	:Vector2f{ 0.0f, 0.0f }
+{
+}
+Vector2f::Vector2f(float x, float y)
+	: x{ x }, y{ y }
+{
+}
