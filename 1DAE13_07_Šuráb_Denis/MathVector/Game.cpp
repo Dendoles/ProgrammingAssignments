@@ -128,16 +128,13 @@ void DrawTriangle(float posX, float posY, float sizeOfOneSide)
 
 void DrawVector(const Vector2f& vector, const Point2f& startingPos)
 {
-	float size{5};
-	//const float rad = g_Pi / 180;
-	//const float atan2 = (90 * rad) - atan2f(vector.x, vector.y);
+	float size{ 5 };
 
 	Point2f endOfTheVectorPos{ vector.x + startingPos.x, vector.y + startingPos.y };
 
 	DrawLine(startingPos.x, startingPos.y, endOfTheVectorPos.x, endOfTheVectorPos.y);
 
-	FillEllipse(endOfTheVectorPos,size, size);
-	//DrawTriangle(endOfTheVectorPos.x * atan2, endOfTheVectorPos.y * atan2, size);
+	FillEllipse(endOfTheVectorPos, size, size);
 }
 
 std::string ToString(const Vector2f& vector)
