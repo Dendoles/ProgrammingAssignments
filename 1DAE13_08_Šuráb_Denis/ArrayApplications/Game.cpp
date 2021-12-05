@@ -6,6 +6,7 @@
 #pragma region gameFunctions											
 void Start()
 {
+	InitPentagramSpeed();
 	// initialize game resources here
 }
 
@@ -13,12 +14,14 @@ void Draw()
 {
 	ClearBackground();
 	DrawClickedPoints();
+	DrawPentagram();
 	// Put your own draw statements here
 
 }
 
 void Update(float elapsedSec)
 {
+	UpdatePentagram(elapsedSec);
 	// process input, do physics 
 
 	// e.g. Check keyboard state
@@ -146,6 +149,47 @@ void DrawClickedPoints()
 				DrawLine(g_Points[i], g_Points[i + 1]);
 			}
 		}
+	}
+}
+
+void DrawPentagram()
+{
+	const float size{ 300 };
+	Color4f green{ 0,1,0,1 };
+	Point2f pos{ g_WindowWidth / 2.f, g_WindowHeight / 2.f };
+	SetColor(green);
+	for (int i{}; i < g_AngleSpeedSize; i++)
+	{
+		const float offset{ (2.f * g_Pi) / 5.f };
+		Point2f p1{ size * cosf(0.f + g_AngleSpeed[i].angle) + pos.x, size * sinf(0.f + g_AngleSpeed[i].angle) + pos.y };
+		Point2f p2{ size * cosf(offset + g_AngleSpeed[i].angle) + pos.x,  size * sinf(offset + g_AngleSpeed[i].angle) + pos.y };
+		Point2f p3{ size * cosf(offset * 2.f + g_AngleSpeed[i].angle) + pos.x, size * sinf(offset * 2.f + g_AngleSpeed[i].angle) + pos.y };
+		Point2f p4{ size * cosf(offset * 3.f + g_AngleSpeed[i].angle) + pos.x,   size * sinf(offset * 3.f + g_AngleSpeed[i].angle) + pos.y };
+		Point2f p5{ size * cosf(offset * 4.f + g_AngleSpeed[i].angle) + pos.x,   size * sinf(offset * 4.f + g_AngleSpeed[i].angle) + pos.y };
+
+		DrawLine(p1.x, p1.y, p3.x, p3.y);
+		DrawLine(p1.x, p1.y, p4.x, p4.y);
+		DrawLine(p2.x, p2.y, p4.x, p4.y);
+		DrawLine(p2.x, p2.y, p5.x, p5.y);
+		DrawLine(p3.x, p3.y, p5.x, p5.y);
+	}
+}
+
+void UpdatePentagram(float elapsedTime)
+{
+	for (int i{}; i < g_AngleSpeedSize; i++)
+	{
+		g_AngleSpeed[i].angle += (g_AngleSpeed[i].speed * elapsedTime);
+	}
+}
+
+void InitPentagramSpeed()
+{
+	float startingNumber{0.2f};
+	float endingNumber{1.1f};
+	for (int i{}; i < g_AngleSpeedSize; i++)
+	{
+		g_AngleSpeed[i].speed = (rand() % (int(endingNumber - startingNumber * 100.f) + 1) + int(startingNumber * 100.f)) / 100.f;
 	}
 }
 
