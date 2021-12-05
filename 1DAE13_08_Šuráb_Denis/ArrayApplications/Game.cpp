@@ -7,6 +7,7 @@
 void Start()
 {
 	InitPentagramSpeed();
+	LoadAndCheckTextures();
 	// initialize game resources here
 }
 
@@ -15,6 +16,7 @@ void Draw()
 	ClearBackground();
 	DrawClickedPoints();
 	DrawPentagram();
+	DrawRandStats();
 	// Put your own draw statements here
 
 }
@@ -22,6 +24,7 @@ void Draw()
 void Update(float elapsedSec)
 {
 	UpdatePentagram(elapsedSec);
+	UpdateRandStats();
 	// process input, do physics 
 
 	// e.g. Check keyboard state
@@ -154,9 +157,9 @@ void DrawClickedPoints()
 
 void DrawPentagram()
 {
-	const float size{ 300 };
+	const float size{ 100 };
 	Color4f green{ 0,1,0,1 };
-	Point2f pos{ g_WindowWidth / 2.f, g_WindowHeight / 2.f };
+	Point2f pos{ g_WindowWidth * 3.f / 4.f, g_WindowHeight / 2.f };
 	SetColor(green);
 	for (int i{}; i < g_AngleSpeedSize; i++)
 	{
@@ -190,6 +193,38 @@ void InitPentagramSpeed()
 	for (int i{}; i < g_AngleSpeedSize; i++)
 	{
 		g_AngleSpeed[i].speed = (rand() % (int(endingNumber - startingNumber * 100.f) + 1) + int(startingNumber * 100.f)) / 100.f;
+	}
+}
+
+void UpdateRandStats()
+{
+	int randomNumber{rand() % g_RandSize};
+	g_RandValues[randomNumber]++;
+}
+
+void LoadAndCheckTextures()
+{
+	bool wasLoaded{true};
+	for (int i{}; i < g_RandSize; i++)
+	{
+		wasLoaded = TextureFromString(std::to_string(i), "Resources/DIN-Light.otf", 20, g_ColorForRand, g_RandNumbers[i]);
+		if (!wasLoaded)
+		{
+			std::cout << "Hey i think something wrong happend while loading the Resources/DIN-Light.otf \t index: " << i << '\n';
+		}
+	}
+}
+
+void DrawRandStats()
+{
+	const float radius{10.f};
+	for (int i{}; i < g_RandSize; i++)
+	{
+		Point2f posOfTextures{ radius, g_RandNumbers[i].height + (g_RandNumbers[i].height * i) + (i * radius)};
+		Point2f posOfRects{ g_RandNumbers[i].width + radius * 2.f, g_RandNumbers[i].height + (g_RandNumbers[i].height * i) + (i * radius) };
+		SetColor(g_ColorForRand);
+		DrawTexture(g_RandNumbers[i], posOfTextures);
+		FillRect(posOfRects, float(g_RandValues[i]), g_RandNumbers[i].height);
 	}
 }
 

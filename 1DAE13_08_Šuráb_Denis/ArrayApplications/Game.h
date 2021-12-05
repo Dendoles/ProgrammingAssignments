@@ -13,6 +13,12 @@ float g_WindowHeight{ 500 };
 
 #pragma region ownDeclarations
 // Declare your own global variables here
+Color4f g_ColorForRand{1,0,1,1};
+const int g_RandSize{6};
+int g_RandValues[g_RandSize]{};
+Texture g_RandNumbers[g_RandSize]{};
+
+
 const int g_PointsSize{5};
 int g_Assigner{g_PointsSize};
 Point2f g_Points[g_PointsSize]{};
@@ -27,6 +33,9 @@ void ShovePoints();
 void DrawPentagram();
 void UpdatePentagram(float elapsedTime);
 void InitPentagramSpeed();
+void LoadAndCheckTextures();
+void UpdateRandStats();
+void DrawRandStats();
 
 #pragma endregion ownDeclarations
 
