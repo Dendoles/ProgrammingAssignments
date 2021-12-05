@@ -17,6 +17,7 @@ void Draw()
 	DrawClickedPoints();
 	DrawPentagram();
 	DrawRandStats();
+	DrawFollowingBubbles();
 	// Put your own draw statements here
 
 }
@@ -25,6 +26,7 @@ void Update(float elapsedSec)
 {
 	UpdatePentagram(elapsedSec);
 	UpdateRandStats();
+	UpdateBubbles();
 	// process input, do physics 
 
 	// e.g. Check keyboard state
@@ -41,6 +43,10 @@ void Update(float elapsedSec)
 
 void End()
 {
+	for (int i{}; i < g_RandSize; i++)
+	{
+		DeleteTexture(g_RandNumbers[i]);
+	}
 	// free game resources here
 }
 #pragma endregion gameFunctions
@@ -71,8 +77,7 @@ void OnKeyUpEvent(SDL_Keycode key)
 
 void OnMouseMotionEvent(const SDL_MouseMotionEvent& e)
 {
-	//std::cout << "  [" << e.x << ", " << e.y << "]\n";
-	//Point2f mousePos{ float( e.x ), float( g_WindowHeight - e.y ) };
+	g_MousePos = Point2f(float( e.x ), float( g_WindowHeight - e.y ));
 }
 
 void OnMouseDownEvent(const SDL_MouseButtonEvent& e)
@@ -225,6 +230,40 @@ void DrawRandStats()
 		SetColor(g_ColorForRand);
 		DrawTexture(g_RandNumbers[i], posOfTextures);
 		FillRect(posOfRects, float(g_RandValues[i]), g_RandNumbers[i].height);
+	}
+}
+
+void UpdateBubbles()
+{
+	if (g_BubblePoints[g_BubblePointsSize - 1].x == 0 &&
+		g_BubblePoints[g_BubblePointsSize - 1].y == 0)
+	{
+		for (int i{}; i < g_BubblePointsSize; i++)
+		{
+			g_BubblePoints[i] = g_MousePos;
+		}
+	}
+	else
+	{
+		for (int i{ 0 }; i < g_BubblePointsSize - 1; i++)
+		{
+			g_BubblePoints[(g_BubblePointsSize - 1) - i] = g_BubblePoints[((g_BubblePointsSize - 1) - i - 1)];
+			Sleep(3);
+		}
+		g_BubblePoints[0] = g_MousePos;
+	}
+}
+
+void DrawFollowingBubbles()
+{
+	const float sizeOfBiggestBubble{ 10.f };
+	const float onePartTransparency{ 1 / g_BubblePointsSize };
+	const float onePartSize{ sizeOfBiggestBubble / g_BubblePointsSize };
+
+	for (int i{}; i < g_BubblePointsSize; i++)
+	{
+		SetColor(0, 1, 0.5f, 1 - (i * onePartTransparency));
+		FillEllipse(g_BubblePoints[i], sizeOfBiggestBubble - (i * onePartSize), sizeOfBiggestBubble - (i * onePartSize));
 	}
 }
 

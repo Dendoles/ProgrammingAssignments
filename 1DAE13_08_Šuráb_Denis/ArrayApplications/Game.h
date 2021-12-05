@@ -22,8 +22,15 @@ Texture g_RandNumbers[g_RandSize]{};
 const int g_PointsSize{5};
 int g_Assigner{g_PointsSize};
 Point2f g_Points[g_PointsSize]{};
+
 const int g_AngleSpeedSize{100};
 AngleSpeed g_AngleSpeed[g_AngleSpeedSize]{};
+
+const int g_BubblePointsSize{10};
+Point2f g_BubblePoints[g_BubblePointsSize]{};
+Point2f g_MousePos{};
+
+
 
 // Declare your own functions here
 
@@ -36,6 +43,8 @@ void InitPentagramSpeed();
 void LoadAndCheckTextures();
 void UpdateRandStats();
 void DrawRandStats();
+void UpdateBubbles();
+void DrawFollowingBubbles();
 
 #pragma endregion ownDeclarations
 
