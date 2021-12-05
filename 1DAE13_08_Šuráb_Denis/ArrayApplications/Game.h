@@ -13,8 +13,15 @@ float g_WindowHeight{ 500 };
 
 #pragma region ownDeclarations
 // Declare your own global variables here
+const int g_PointsSize{5};
+int g_Assigner{g_PointsSize};
+Point2f g_Points[g_PointsSize]{};
 
 // Declare your own functions here
+
+int UpdateAssigner();
+void DrawClickedPoints();
+void ShovePoints();
 
 #pragma endregion ownDeclarations
 

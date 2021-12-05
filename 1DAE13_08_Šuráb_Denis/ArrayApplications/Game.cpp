@@ -12,6 +12,7 @@ void Start()
 void Draw()
 {
 	ClearBackground();
+	DrawClickedPoints();
 	// Put your own draw statements here
 
 }
@@ -75,26 +76,77 @@ void OnMouseDownEvent(const SDL_MouseButtonEvent& e)
 
 void OnMouseUpEvent(const SDL_MouseButtonEvent& e)
 {
-	////std::cout << "  [" << e.x << ", " << e.y << "]\n";
-	//switch (e.button)
-	//{
-	//case SDL_BUTTON_LEFT:
-	//{
-	//	//std::cout << "Left mouse button released\n";
-	//	//Point2f mousePos{ float( e.x ), float( g_WindowHeight - e.y ) };
-	//	break;
-	//}
-	//case SDL_BUTTON_RIGHT:
-	//	//std::cout << "Right mouse button released\n";
-	//	break;
-	//case SDL_BUTTON_MIDDLE:
-	//	//std::cout << "Middle mouse button released\n";
-	//	break;
-	//}
+	switch (e.button)
+	{
+	case SDL_BUTTON_LEFT:
+			
+			g_Points[UpdateAssigner()] = Point2f(float(e.x), float(g_WindowHeight - e.y));
+			//for (int i = 0; i < g_PointsSize; i++)
+			//{
+			//	std::cout << i << ":   " << g_Points[i].x << '\t' << g_Points[i].y;
+			//	std::cout << '\n';
+			//}
+			//std::cout << '\n';
+		break;
+	}
 }
 #pragma endregion inputHandling
 
 #pragma region ownDefinitions
 // Define your own functions here
+
+int UpdateAssigner()
+{
+	if (g_Points[0].x != 0 &&
+		g_Points[0].y != 0)
+	{
+		ShovePoints();
+		//g_Assigner = g_PointsSize - 1;
+		g_Assigner = 0;
+	}
+	else
+	{
+		g_Assigner--;
+	}
+	return g_Assigner;
+}
+
+void ShovePoints()
+{
+	for (int i{ 0 }; i < g_PointsSize - 1; i++)
+	{
+		g_Points[(g_PointsSize - 1) - i] = g_Points[((g_PointsSize - 1) - i - 1)];
+	}
+	//4 -> 3 -> 2 -> 1 -> 0
+
+	//for (int i{ g_PointsSize - 1 }; i > 0; i--)
+	//{
+	//	if (i != 1)
+	//	{
+	//		g_Points[i - 1] = g_Points[i - 2];
+	//	}
+	//}
+}
+
+void DrawClickedPoints()
+{
+	const float radius{ 10 };
+	for (int i{}; i < g_PointsSize; i++)
+	{
+		if (g_Points[i].x != 0 &&
+			g_Points[i].y != 0)
+		{
+			SetColor(1, 1, 0);
+			FillEllipse(g_Points[i], radius, radius);
+			if (i != g_PointsSize - 1 &&
+				g_Points[i + 1].x != 0 &&
+				g_Points[i + 1].y != 0)
+			{
+				SetColor(1, 1, 1);
+				DrawLine(g_Points[i], g_Points[i + 1]);
+			}
+		}
+	}
+}
 
 #pragma endregion ownDefinitions
