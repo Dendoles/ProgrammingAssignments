@@ -31,6 +31,14 @@ Point2f g_BubblePoints[g_BubblePointsSize]{};
 Point2f g_MousePos{};
 
 
+Point2f g_ClickPos{};
+const int g_Rows{3};
+const int g_Columns{4};
+const int g_CellClickedSize{g_Rows * g_Columns};
+bool g_IsCellClicked[g_CellClickedSize]{};
+const Point2f g_PosOfGrid{ 20, g_WindowHeight / 2.f };
+const float g_OneGridSize{ 80 };
+
 
 // Declare your own functions here
 
@@ -45,6 +53,9 @@ void UpdateRandStats();
 void DrawRandStats();
 void UpdateBubbles();
 void DrawFollowingBubbles();
+void UpdateGrids();
+void DrawGrid();
+void CheckCollision();
 
 #pragma endregion ownDeclarations
 

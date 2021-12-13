@@ -14,10 +14,11 @@ void Start()
 void Draw()
 {
 	ClearBackground();
-	DrawClickedPoints();
 	DrawPentagram();
 	DrawRandStats();
 	DrawFollowingBubbles();
+	DrawGrid();
+	DrawClickedPoints();
 	// Put your own draw statements here
 
 }
@@ -27,6 +28,7 @@ void Update(float elapsedSec)
 	UpdatePentagram(elapsedSec);
 	UpdateRandStats();
 	UpdateBubbles();
+	UpdateGrids();
 	// process input, do physics 
 
 	// e.g. Check keyboard state
@@ -90,14 +92,12 @@ void OnMouseUpEvent(const SDL_MouseButtonEvent& e)
 	switch (e.button)
 	{
 	case SDL_BUTTON_LEFT:
-			
-			g_Points[UpdateAssigner()] = Point2f(float(e.x), float(g_WindowHeight - e.y));
-			//for (int i = 0; i < g_PointsSize; i++)
-			//{
-			//	std::cout << i << ":   " << g_Points[i].x << '\t' << g_Points[i].y;
-			//	std::cout << '\n';
-			//}
-			//std::cout << '\n';
+		g_Points[UpdateAssigner()] = Point2f(float(e.x), float(g_WindowHeight - e.y));
+		g_ClickPos = Point2f(float(e.x), float(g_WindowHeight - e.y));
+		break;
+
+	case SDL_BUTTON_RIGHT:
+		CheckCollision();
 		break;
 	}
 }
@@ -248,7 +248,7 @@ void UpdateBubbles()
 		for (int i{ 0 }; i < g_BubblePointsSize - 1; i++)
 		{
 			g_BubblePoints[(g_BubblePointsSize - 1) - i] = g_BubblePoints[((g_BubblePointsSize - 1) - i - 1)];
-			Sleep(3);
+			Sleep(5);
 		}
 		g_BubblePoints[0] = g_MousePos;
 	}
@@ -267,4 +267,54 @@ void DrawFollowingBubbles()
 	}
 }
 
+void UpdateGrids()
+{
+
+}
+
+void DrawGrid()
+{
+	const Color4f unclickedColor{0,1,0,1},
+		clickedColor{.5f,0,.5f,1},
+		borderColor{1,1,1,1};
+
+	const float lineSize{1.5f};
+	const int rows{3};
+	const int columns{4};
+
+	for (int i{}; i < g_Rows; i++)
+	{
+		for (int u{}; u < g_Columns; u++)
+		{
+			if (g_IsCellClicked[(i * g_Columns) + u])
+			{
+				SetColor(clickedColor);
+			}
+			else
+			{
+				SetColor(unclickedColor);
+			}
+			//std::cout << i * columns + u << std::endl;
+			FillRect(g_PosOfGrid.x + (g_OneGridSize * u), g_PosOfGrid.y + (g_OneGridSize * i), g_OneGridSize, g_OneGridSize);
+
+			SetColor(borderColor);
+			DrawRect(g_PosOfGrid.x + (g_OneGridSize * u), g_PosOfGrid.y + (g_OneGridSize * i), g_OneGridSize, g_OneGridSize, lineSize);
+		}
+	}
+}
+
+void CheckCollision()
+{
+	for (int i{}; i < g_Rows; i++)
+	{
+		for (int u{}; u < g_Columns; u++)
+		{
+			Rectf cell{g_PosOfGrid.x + (g_OneGridSize * u), g_PosOfGrid.y + (g_OneGridSize * i), g_OneGridSize, g_OneGridSize};
+			if (IsPointInRect(g_MousePos, cell))
+			{
+				g_IsCellClicked[i * g_Columns + u] = !g_IsCellClicked[i * g_Columns + u];
+			}
+		}
+	}
+}
 #pragma endregion ownDefinitions

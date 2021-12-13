@@ -38,7 +38,7 @@ int main()
     //PrintSizeOfArrays();
     //PrintAddressOfArray();
     //TestPrintElements();
-    //Print2DArray();
+    Print2DArray();
 }
 
 void PrintElementsInArrays()
