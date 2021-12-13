@@ -6,6 +6,7 @@
 #pragma region gameFunctions											
 void Start()
 {
+	InitializeSounds();
 	g_Circle.center.x = float(rand() % int(g_WindowWidth - (g_Circle.radius * 2) + 1) + int(g_Circle.radius));
 	g_Circle.center.y = float(rand() % int(g_WindowHeight - (g_Circle.radius * 2) + 1) + int(g_Circle.radius));
 	g_Rectangle.left = float(rand() % int(g_WindowWidth - (g_Rectangle.width) + 1) + 0);
@@ -165,5 +166,37 @@ void DrawRectAndCircle()
 	}
 	FillRect(mouseRect);
 }
+
+void InitializeSounds()
+{
+	//Sounds/Shoot.wav
+	const char* path{"Sounds/bc_music.mp3"};
+	const char* path2{ "Sounds/bc_music.mp3" };
+	const char* path3{"Sounds/ihopeyoushatyourself.wav"};
+	SDL_Init(SDL_INIT_AUDIO);
+	
+	int audioHertz{22050}; //default is 22050
+	Uint16 audioFormat{AUDIO_S16SYS};
+	int audioChannel{2};
+	int audioBuffer{4096};
+
+	if (Mix_OpenAudio(audioHertz, audioFormat, audioChannel, audioBuffer) != 0)
+	{
+		std::cout << "Rip audio\n";
+	}
+	g_pTmpChunk = Mix_LoadWAV(path3);
+
+	if (g_pTmpChunk == nullptr)
+	{
+		std::cout << "pTmpChunk was a nullprt\n";
+	}
+
+	Mix_Volume(-1,MIX_MAX_VOLUME/10);
+	Mix_PlayChannel(-1, g_pTmpChunk, 0);
+	//Mix_PlayMusic()
+	std::cout << "Played sound\n";
+	//TODO: add SDL_Quit(); at the end function
+}
+
 
 #pragma endregion ownDefinitions

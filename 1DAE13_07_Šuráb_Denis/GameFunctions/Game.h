@@ -17,12 +17,14 @@ float g_WindowHeight{ 500 };
 Point2f g_MousePos{};
 Circlef g_Circle{ 0,0, 30 };
 Rectf g_Rectangle{0, 0, 50, 100};
+Mix_Chunk* g_pTmpChunk{};
 
 // Declare your own functions here
 
 void DrawRandomCircle();
 void DrawRandomRectangle();
 void DrawRectAndCircle();
+void InitializeSounds();
 
 #pragma endregion ownDeclarations
 
